@@ -1,10 +1,26 @@
+import { hashSync } from "bcrypt-ts-edge";
+
 const sampleData = {
+  users: [
+    {
+      name: "Admin",
+      email: "admin@example.com",
+      password: hashSync("123456", 10),
+      role: "admin",
+    },
+    {
+      name: "Usuario",
+      email: "usuario@example.com",
+      password: hashSync("123456", 10),
+      role: "user",
+    },
+  ],
   products: [
     {
-      name: "Polo Sporting Stretch Shirt",
+      name: "Camisa Deportiva Polo",
       slug: "polo-sporting-stretch-shirt",
-      category: "Men's Dress Shirts",
-      description: "Classic Polo style with modern comfort",
+      category: "Camisas de Vestir de Hombres",
+      description: "Estilo Polo Clásico con confort moderno",
       images: [
         "/images/sample-products/p1-1.jpg",
         "/images/sample-products/p1-2.jpg",
@@ -18,10 +34,10 @@ const sampleData = {
       banner: "banner-1.jpg",
     },
     {
-      name: "Brooks Brothers Long Sleeved Shirt",
+      name: "Camisa Brooks Brothers Manga Larga",
       slug: "brooks-brothers-long-sleeved-shirt",
-      category: "Men's Dress Shirts",
-      description: "Timeless style and premium comfort",
+      category: "Camisas de Vestir de Hombres",
+      description: "Estilo atemportal con confort premium",
       images: [
         "/images/sample-products/p2-1.jpg",
         "/images/sample-products/p2-2.jpg",
@@ -35,10 +51,10 @@ const sampleData = {
       banner: "banner-2.jpg",
     },
     {
-      name: "Tommy Hilfiger Classic Fit Dress Shirt",
+      name: "Camisa de Vestir Clasica Tommy Hilfiger",
       slug: "tommy-hilfiger-classic-fit-dress-shirt",
-      category: "Men's Dress Shirts",
-      description: "A perfect blend of sophistication and comfort",
+      category: "Camisas de Vestir de Hombres",
+      description: "Una combinación perfecta de estilo y confort",
       images: [
         "/images/sample-products/p3-1.jpg",
         "/images/sample-products/p3-2.jpg",
@@ -52,10 +68,10 @@ const sampleData = {
       banner: null,
     },
     {
-      name: "Calvin Klein Slim Fit Stretch Shirt",
+      name: "Camisa Calvin Klein Slim",
       slug: "calvin-klein-slim-fit-stretch-shirt",
-      category: "Men's Dress Shirts",
-      description: "Streamlined design with flexible stretch fabric",
+      category: "Camisas de Vestir de Hombres",
+      description: "Diseño rayado con flexible ajuste de fábrica",
       images: [
         "/images/sample-products/p4-1.jpg",
         "/images/sample-products/p4-2.jpg",
@@ -69,10 +85,10 @@ const sampleData = {
       banner: null,
     },
     {
-      name: "Polo Ralph Lauren Oxford Shirt",
+      name: "Camisa Oxford Polo Ralph Lauren",
       slug: "polo-ralph-lauren-oxford-shirt",
-      category: "Men's Dress Shirts",
-      description: "Iconic Polo design with refined oxford fabric",
+      category: "Camisas de Vestir de Hombres",
+      description: "Diseño iconico Polo refinado en fábrica oxford",
       images: [
         "/images/sample-products/p5-1.jpg",
         "/images/sample-products/p5-2.jpg",
@@ -86,10 +102,10 @@ const sampleData = {
       banner: null,
     },
     {
-      name: "Polo Classic Pink Hoodie",
+      name: "Polo Classic Rosada",
       slug: "polo-classic-pink-hoodie",
-      category: "Men's Sweatshirts",
-      description: "Soft, stylish, and perfect for laid-back days",
+      category: "Camisas de Vestir de Hombres",
+      description: "Suave, con estilo, y perfecta para días de relajación",
       images: [
         "/images/sample-products/p6-1.jpg",
         "/images/sample-products/p6-2.jpg",
