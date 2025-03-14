@@ -1,7 +1,7 @@
+import AddToCard from "@/components/shared/product/add-to-cart";
 import ProductImages from "@/components/shared/product/product-images";
 import ProductPrice from "@/components/shared/product/product-price";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getProductBySlug } from "@/lib/actions/product.actions";
 import { notFound } from "next/navigation";
@@ -67,7 +67,16 @@ export default async function ProductDetailsPage(props: {
                 </div>
                 {product.stock > 0 && (
                   <div className=" flex-center">
-                    <Button className="w-full">Agregar al carrito</Button>
+                    <AddToCard
+                      item={{
+                        productId: product.id,
+                        name: product.name,
+                        slug: product.slug,
+                        price: product.price,
+                        qty: 1,
+                        image: product.images![0],
+                      }}
+                    ></AddToCard>
                   </div>
                 )}
               </CardContent>

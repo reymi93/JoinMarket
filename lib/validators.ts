@@ -49,3 +49,23 @@ export const signUpFormSchema = z
     message: "Las contraseñas no coinciden",
     path: ["confirmPassword"],
   });
+
+// Cart Schemas
+export const cartItemSchema = z.object({
+  productId: z.string().min(1, "El producto es requerido"),
+  name: z.string().min(1, "El nombre es requerido"),
+  slug: z.string().min(1, "El slug es requerido"),
+  qty: z.number().int().nonnegative("La cantidad debe ser un número positivo"),
+  image: z.string().min(1, "La imagen es requerida"),
+  price: currency,
+});
+
+export const insertCartSchema = z.object({
+  items: z.array(cartItemSchema),
+  itemsPrice: currency,
+  totalPrice: currency,
+  shippingPrice: currency,
+  taxPrice: currency,
+  sessionCartId: z.string().min(1, "El id del carrito es requerido"),
+  userId: z.string().optional().nullable(),
+});
