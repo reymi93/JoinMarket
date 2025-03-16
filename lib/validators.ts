@@ -69,3 +69,18 @@ export const insertCartSchema = z.object({
   sessionCartId: z.string().min(1, "El id del carrito es requerido"),
   userId: z.string().optional().nullable(),
 });
+
+// Schema for the shipping address
+export const shippingAddressSchema = z.object({
+  fullName: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
+  streetAddress: z
+    .string()
+    .min(3, "La dirección debe tener al menos 3 caracteres"),
+  city: z.string().min(3, "La ciudad debe tener al menos 3 caracteres"),
+  postalCode: z
+    .string()
+    .min(3, "El código postal debe tener al menos 3 caracteres"),
+  country: z.string().min(3, "El país debe tener al menos 3 caracteres"),
+  lat: z.number().optional(),
+  lng: z.number().optional(),
+});
