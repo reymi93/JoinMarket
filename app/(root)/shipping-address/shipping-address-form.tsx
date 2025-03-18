@@ -184,7 +184,7 @@ export default function ShippingAddressForm({
                 ) : (
                   <ArrowRight className="w-4 h-4" />
                 )}{" "}
-                Continue
+                Continuar
               </Button>
             </div>
           </form>

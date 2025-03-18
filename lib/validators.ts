@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { formatNumberWithDecimal } from "./utils";
+import { PAYMENT_METHODS } from "./constansts";
 
 const currency = z
   .string()
@@ -83,4 +84,50 @@ export const shippingAddressSchema = z.object({
   country: z.string().min(3, "El país debe tener al menos 3 caracteres"),
   lat: z.number().optional(),
   lng: z.number().optional(),
+});
+
+// Schema for payment method
+export const paymentMethodSchema = z
+  .object({
+    type: z.string().min(1, "El método de pago es requerido"),
+  })
+  .refine((data) => PAYMENT_METHODS.includes(data.type), {
+    path: ["type"],
+    message: "Método de Pago Inválido",
+  });
+
+//Schema for  Insert order
+export const insertOrderSchema = z.object({
+  userId: z.string().min(1, "El usuario es requerido"),
+  itemsPrice: currency,
+  shippingPrice: currency,
+  taxPrice: currency,
+  totalPrice: currency,
+  paymentMethod: z.string().refine((data) => PAYMENT_METHODS.includes(data), {
+    message: "Método de pago inválido",
+  }),
+  shippingAddress: shippingAddressSchema,
+});
+
+//Schema for inserting order item
+export const insertOrderItemSchema = z.object({
+  productId: z.string(),
+  slug: z.string(),
+  image: z.string(),
+  name: z.string(),
+  price: currency,
+  qty: z.number(),
+});
+
+export const paymentResultSchema = z.object({
+  id: z.string(),
+  status: z.string(),
+  email_address: z.string(),
+  pricePaid: z.string(),
+});
+
+// Schema for updating the user profile
+export const updateProfileSchema = z.object({
+  name: z.string().min(3, "El nombre debe tener por lo menos 3 caracteres"),
+  email: z.string().min(3, "El correo debe tener por lo menos 3 caracteres"),
 });
