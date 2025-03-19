@@ -14,8 +14,21 @@ import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
 import { Order } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  deliverOrder,
+  updateOrderToPaidCOD,
+} from "@/lib/actions/order.actions";
+import { useTransition } from "react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
-export default function OrderDetailsTable({ order }: { order: Order }) {
+export default function OrderDetailsTable({
+  order,
+  isAdmin,
+}: {
+  order: Order;
+  isAdmin: boolean;
+}) {
   const {
     id,
     shippingAddress,
@@ -30,6 +43,46 @@ export default function OrderDetailsTable({ order }: { order: Order }) {
     paidAt,
     deliveredAt,
   } = order;
+
+  // Button to mark order as paid
+  const MarkAsPaidButton = () => {
+    const [isPending, startTransition] = useTransition();
+
+    return (
+      <Button
+        type="button"
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await updateOrderToPaidCOD(order.id);
+            toast.success(res.message);
+          })
+        }
+      >
+        {isPending ? "Procesando..." : "Marcar Como Pagado"}
+      </Button>
+    );
+  };
+
+  // Button to mark order as delivered
+  const MarkAsDeliveredButton = () => {
+    const [isPending, startTransition] = useTransition();
+
+    return (
+      <Button
+        type="button"
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await deliverOrder(order.id);
+            toast.success(res.message);
+          })
+        }
+      >
+        {isPending ? "Procesando..." : "Marcar Como Entregado"}
+      </Button>
+    );
+  };
 
   return (
     <>
@@ -52,7 +105,7 @@ export default function OrderDetailsTable({ order }: { order: Order }) {
           <Card className="my-2">
             <CardContent className="p-4 gap-4">
               <h2 className="text-xl pb-4">Dirección de Envío</h2>
-              <p>{shippingAddress.fullname}</p>
+              <p>{shippingAddress.fullName}</p>
               <p className="mb-2">
                 {shippingAddress.streetAddress}, {shippingAddress.city}
                 {shippingAddress.postalCode}, {shippingAddress.country}
@@ -97,7 +150,7 @@ export default function OrderDetailsTable({ order }: { order: Order }) {
                       <TableCell>
                         <span className="px-2">{item.qty}</span>
                       </TableCell>
-                      <TableCell>${item.price}</TableCell>
+                      <TableCell>${Number(item.price)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -124,6 +177,11 @@ export default function OrderDetailsTable({ order }: { order: Order }) {
                 <div>Total</div>
                 <div>{formatCurrency(totalPrice)}</div>
               </div>
+              {/* Cash onDelivery */}
+              {isAdmin && !isPaid && paymentMethod === "CashOnDelivery" && (
+                <MarkAsPaidButton />
+              )}
+              {isAdmin && isPaid && !isDelivered && <MarkAsDeliveredButton />}
             </CardContent>
           </Card>
         </div>
