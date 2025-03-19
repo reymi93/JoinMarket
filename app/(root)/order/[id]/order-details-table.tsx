@@ -30,6 +30,7 @@ export default function OrderDetailsTable({
   isAdmin: boolean;
 }) {
   const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     id,
     shippingAddress,
     orderitems,
