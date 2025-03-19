@@ -26,6 +26,11 @@ export const insertProductSchema = z.object({
   price: currency,
 });
 
+// Schema for update products
+export const updateProductSchema = insertProductSchema.extend({
+  id: z.string().min(1, "El id es requerido"),
+});
+
 // Schema for signing users
 export const signInFormSchema = z.object({
   email: z.string().email("Dirección de correo inválida"),
@@ -130,4 +135,10 @@ export const paymentResultSchema = z.object({
 export const updateProfileSchema = z.object({
   name: z.string().min(3, "El nombre debe tener por lo menos 3 caracteres"),
   email: z.string().min(3, "El correo debe tener por lo menos 3 caracteres"),
+});
+
+// Schema to update users
+export const updateUserSchema = updateProfileSchema.extend({
+  id: z.string().min(1, "El id es requerido"),
+  role: z.string().min(1, "El rol es requerido"),
 });

@@ -55,7 +55,6 @@ export default function DeleteDialog({
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <Button
             variant="destructive"
-            size="sm"
             disabled={isPending}
             onClick={handleDeleteClick}
           >
