@@ -13,7 +13,7 @@ import {
 import { getMyCart } from "@/lib/actions/cart.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 import { formatCurrency } from "@/lib/utils";
-import { ShippingAddress } from "@/types";
+import { CartItem, ShippingAddress } from "@/types";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -86,7 +86,7 @@ export default async function PlaceOrderPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {cart.items.map((item) => (
+                  {cart.items.map((item: CartItem) => (
                     <TableRow key={item.slug}>
                       <TableCell>
                         <Link
