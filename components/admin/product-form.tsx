@@ -37,6 +37,8 @@ export default function ProductForm({
   const router = useRouter();
 
   const form = useForm<z.infer<typeof insertProductSchema>>({
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-expect-error
     resolver:
       type === "Actualizar"
         ? zodResolver(updateProductSchema)
@@ -66,7 +68,7 @@ export default function ProductForm({
         router.push("/admin/products");
       }
 
-      const res = await updateProduct({ ...values, id: productId });
+      const res = await updateProduct({ ...values, id: productId as string });
 
       if (!res.success) {
         toast.error(res.message);
