@@ -44,15 +44,21 @@ export async function getAllProducts({
   limit = PAGE_SIZE,
   page,
   category,
+  price,
+  rating,
+  sort,
 }: {
   query: string;
   limit?: number;
   page: number;
   category?: string;
+  price?: string;
+  rating?: string;
+  sort?: string;
 }) {
   // Query filter
   const queryFilter: Prisma.ProductWhereInput =
-    query && query !== "all"
+    query && query !== "todas"
       ? {
           name: {
             contains: query,
@@ -61,11 +67,45 @@ export async function getAllProducts({
         }
       : {};
 
+  // Category filter
+  const categoryFilter = category && category !== "todas" ? { category } : {};
+
+  // Price filter
+  const priceFilter: Prisma.ProductWhereInput =
+    price && price !== "todas"
+      ? {
+          price: {
+            gte: Number(price.split("-")[0]),
+            lte: Number(price.split("-")[1]),
+          },
+        }
+      : {};
+
+  // Rating filter
+  const ratingFilter =
+    rating && rating !== "todas"
+      ? {
+          rating: {
+            gte: Number(rating),
+          },
+        }
+      : {};
+
   const data = await prisma.product.findMany({
     where: {
       ...queryFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...ratingFilter,
     },
-    orderBy: { createdAt: "desc" },
+    orderBy:
+      sort === "más bajo"
+        ? { price: "asc" }
+        : sort === "más alto"
+        ? { price: "desc" }
+        : sort === "valoraciones"
+        ? { rating: "desc" }
+        : { createdAt: "desc" },
     skip: (page - 1) * limit,
     take: limit,
   });
@@ -162,4 +202,29 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
       message: formatError(error),
     };
   }
+}
+
+// Get all categories
+export async function getAllCategories() {
+  const data = await prisma.product.groupBy({
+    by: ["category"],
+    _count: true,
+  });
+
+  return data;
+}
+
+// Get all featured products
+export async function getFeaturedProducts() {
+  const data = await prisma.product.findMany({
+    where: {
+      isFeatured: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 4,
+  });
+
+  return converToPlainObject(data);
 }

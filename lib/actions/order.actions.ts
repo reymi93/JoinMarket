@@ -277,7 +277,7 @@ export async function getAllOrders({
   query: string;
 }) {
   const queryFilter: Prisma.OrderWhereInput =
-    query && query !== "all"
+    query && query !== "todas"
       ? {
           user: {
             name: {
