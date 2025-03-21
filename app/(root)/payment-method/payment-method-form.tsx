@@ -52,7 +52,7 @@ export default function PaymentMethodForm({
   return (
     <>
       <div className="max-w-md mx-auto space-y-4">
-        <h1 className="h2-bold mt-4">Méetodo de Pago</h1>
+        <h1 className="h2-bold mt-4">Método de Pago</h1>
         <p className="text-sm text-muted-foreground">
           Por favor seleccione un método de pago
         </p>

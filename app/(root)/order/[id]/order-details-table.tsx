@@ -21,13 +21,16 @@ import {
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import StripePayment from "./stripe-payment";
 
 export default function OrderDetailsTable({
   order,
   isAdmin,
+  stripeClientSecret,
 }: {
   order: Order;
   isAdmin: boolean;
+  stripeClientSecret: string | null;
 }) {
   const {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -178,6 +181,14 @@ export default function OrderDetailsTable({
                 <div>Total</div>
                 <div>{formatCurrency(totalPrice)}</div>
               </div>
+              {/* Stripe Payment */}
+              {!isPaid && paymentMethod === "Stripe" && stripeClientSecret && (
+                <StripePayment
+                  priceInCents={Number(order.totalPrice) * 100}
+                  orderId={order.id}
+                  clientSecret={stripeClientSecret}
+                />
+              )}
               {/* Cash onDelivery */}
               {isAdmin && !isPaid && paymentMethod === "CashOnDelivery" && (
                 <MarkAsPaidButton />
