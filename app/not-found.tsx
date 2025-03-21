@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/constansts";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function NotFoundPage() {
   return (
@@ -19,12 +20,8 @@ export default function NotFoundPage() {
         <p className="text-destructive">
           No se pudo encontrar la página solicitada
         </p>
-        <Button
-          variant="outline"
-          className="mt-4 ml-2"
-          onClick={() => (window.location.href = "/")}
-        >
-          Volver a Inicio
+        <Button variant="outline" className="mt-4 ml-2" asChild>
+          <Link href="/">Volver a inicio</Link>
         </Button>
       </div>
     </div>
