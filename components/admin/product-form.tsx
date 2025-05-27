@@ -103,7 +103,7 @@ export default function ProductForm({
                 "name"
               >;
             }) => (
-              <FormItem className="w-full">
+              <FormItem className="w-full mb-12">
                 <FormLabel>Nombre</FormLabel>
                 <FormControl>
                   <Input
