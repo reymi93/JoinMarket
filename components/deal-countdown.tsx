@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 // Static target date (replace with desired date)
-const TARGET_DATE = new Date("2025-05-30T00:00:00");
+const TARGET_DATE = new Date("2025-07-30T00:00:00");
 
 // Function to calculate the time remaining
 const calculateTimeRemaining = (targetDate: Date) => {
